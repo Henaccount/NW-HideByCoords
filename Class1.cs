@@ -54,8 +54,8 @@ namespace HideByCoords
         public override int Execute(params string[] parameters)
         {
             string fileoutpath = @parameters[0];
-            Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1]), Convert.ToDouble(parameters[2]), Convert.ToDouble(parameters[3]));
-            Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4]), Convert.ToDouble(parameters[5]), Convert.ToDouble(parameters[6]));
+            Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1].Replace("neg", "-")), Convert.ToDouble(parameters[2].Replace("neg", "-")), Convert.ToDouble(parameters[3].Replace("neg", "-")));
+            Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4].Replace("neg", "-")), Convert.ToDouble(parameters[5].Replace("neg", "-")), Convert.ToDouble(parameters[6].Replace("neg", "-")));
             string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\HideByCoords.log";
             File.WriteAllText(logfile, "script start\r\n");
            
@@ -85,8 +85,8 @@ namespace HideByCoords
 
             doc.Models.SetHidden(itemsoutside, true);
             doc.SaveFile(fileoutpath);
+            File.WriteAllText(logfile, "script end\r\n");
 
-           
             return 0;
 
         }
