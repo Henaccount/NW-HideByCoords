@@ -1,0 +1,97 @@
+﻿//------------------------------------------------------------------
+// NavisWorks Sample code
+//------------------------------------------------------------------
+
+// (C) Copyright 2009 by Autodesk Inc.
+
+// Permission to use, copy, modify, and distribute this software in
+// object code form for any purpose and without fee is hereby granted,
+// provided that the above copyright notice appears in all copies and
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting
+// documentation.
+
+// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
+// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+//------------------------------------------------------------------
+//
+// This is the 'HideByCoords' Sample.
+//
+//------------------------------------------------------------------
+#region HideByCoords
+
+//Add two new namespaces
+using Autodesk.Navisworks.Api;
+using Autodesk.Navisworks.Api.Plugins;
+using System;
+using System.IO;
+
+
+
+namespace HideByCoords
+{
+    [PluginAttribute("HideByCoords.AHideByCoords",                   //Plugin name
+                     "ADSK",                                       //4 character Developer ID or GUID
+                     ToolTip = "HideByCoords.AHideByCoords tool tip",//The tooltip for the item in the ribbon
+                     DisplayName = "HideByCoords")]          //Display name for the Plugin in the Ribbon
+
+    public class AHideByCoords : AddInPlugin                 //Derives from AddInPlugin
+    {
+        public static bool BoxesIntersect(Point3D amin, Point3D amax, Point3D bmin, Point3D bmax)
+        {
+            if (amax.X < bmin.X) return false; 
+            if (amin.X > bmax.X) return false; 
+            if (amax.Y < bmin.Y) return false; 
+            if (amin.Y > bmax.Y) return false; 
+            if (amax.Z < bmin.Z) return false; 
+            if (amin.Z > bmax.Z) return false; 
+            return true; 
+        }
+
+        public override int Execute(params string[] parameters)
+        {
+            string fileoutpath = @parameters[0];
+            Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1]), Convert.ToDouble(parameters[2]), Convert.ToDouble(parameters[3]));
+            Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4]), Convert.ToDouble(parameters[5]), Convert.ToDouble(parameters[6]));
+            string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\HideByCoords.log";
+            File.WriteAllText(logfile, "script start\r\n");
+           
+
+            Document doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
+            ModelItemEnumerableCollection allmodelitems = doc.Models.CreateCollectionFromRootItems().DescendantsAndSelf;
+            doc.Models.SetHidden(allmodelitems, false);
+
+
+            ModelItemCollection itemsoutside = new ModelItemCollection();
+
+            foreach (ModelItem modelItem in allmodelitems)
+            {
+                try
+                {
+                    if (modelItem.HasGeometry)
+                    {
+                        if (!BoxesIntersect(modelItem.BoundingBox().Min, modelItem.BoundingBox().Max, selbbmin, selbbmax))
+                            itemsoutside.Add(modelItem);
+                    }
+                }
+                catch (Exception e)
+                {
+                    File.WriteAllText(logfile, e.Message + "###" + e.StackTrace); 
+                }
+            }
+
+            doc.Models.SetHidden(itemsoutside, true);
+            doc.SaveFile(fileoutpath);
+
+           
+            return 0;
+
+        }
+
+
+    }
+}
+#endregion
