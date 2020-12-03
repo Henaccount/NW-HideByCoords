@@ -2,15 +2,15 @@
 "Splits" a Navisworks model by creating copies of the model with just certain part of the model being visible. This is for use on the BIM 360 viewer.
 
 # Installation:
-<img src="./HideByCoordsInstall.png" width=500>
+<img src="./HideByCoordsInstall.png" width=600>
 
 # Usage:
 
-Example:
+<u>Example:</u>
 
 "D:\Program Files\Autodesk\Navisworks Manage 2020\Roamer.exe" -NoGui -OpenFile "D:\Downloads\Modelle\RVT_P3D_AS.nwd" -ExecuteAddInPlugin "HideByCoords.AHideByCoords.ADSK" "D:\Downloads\Modelle\RVT_P3D_AS_mod.nwd" neg15.668 9.754 neg2.897 10.668 14.754 7.897
 
-Details:
+<u>Details:</u>
 
 Roamer.exe -NoGui -OpenFile (Input Navisworks File) -ExecuteAddInPlugin "HideByCoords.AHideByCoords.ADSK" (Output Navisworks Copy with parts are hidden) MinX MinY MinZ MaxX MaxY MaxZ
 
