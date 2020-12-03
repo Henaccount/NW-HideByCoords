@@ -3,6 +3,7 @@
 
 # Installation:
 See HideByCoordsInstall.png
+<img src="./HideByCoordsInstall.png">
 
 # Usage:
 
