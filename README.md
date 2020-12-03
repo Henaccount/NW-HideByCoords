@@ -18,4 +18,5 @@ MinX MinY MinZ are the coordinates of the lower edge of the cube to be respected
 
 MaxX MaxY MaxZ are the coordinates of the upper edge of the cube with MaxX > MinX, MaxY > MinY, MaxZ > MinZ
 
-# You cannot use the Minus for the Numbers, you need to write negative numbers like this: neg15.668 instead of -15.668
+<b>You cannot use the Minus for the Numbers, you need to write negative numbers like this: neg15.668 instead of -15.668</b>
+
