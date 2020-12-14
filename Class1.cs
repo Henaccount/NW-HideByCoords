@@ -27,6 +27,7 @@
 using Autodesk.Navisworks.Api;
 using Autodesk.Navisworks.Api.Plugins;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 
@@ -57,7 +58,7 @@ namespace HideByCoords
             Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1].Replace("neg", "-")), Convert.ToDouble(parameters[2].Replace("neg", "-")), Convert.ToDouble(parameters[3].Replace("neg", "-")));
             Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4].Replace("neg", "-")), Convert.ToDouble(parameters[5].Replace("neg", "-")), Convert.ToDouble(parameters[6].Replace("neg", "-")));
             string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\HideByCoords.log";
-            string log = "";
+            List<string> log = new List<string>();
 
 
             Document doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
@@ -80,9 +81,15 @@ namespace HideByCoords
                         else
                         {
                             if (modelItem.DisplayName.StartsWith("/"))
-                                log += modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath) + "\r\n";
+                            {
+                                if(!log.Contains(modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
+                                    log.Add(modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath));
+                            }
                             else
-                                log += modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath) + "\r\n";
+                            {
+                                if(!log.Contains(modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
+                                    log.Add(modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath));
+                            }
                         }
                     }
                 }
@@ -94,7 +101,7 @@ namespace HideByCoords
 
             doc.Models.SetHidden(itemsoutside, true);
             doc.SaveFile(fileoutpath);
-            File.AppendAllText(logfile, log);
+            File.AppendAllText(logfile, string.Join("\r\n", log));
 
             return 0;
 
