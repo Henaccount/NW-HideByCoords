@@ -42,13 +42,13 @@ namespace HideByCoords
     {
         public static bool BoxesIntersect(Point3D amin, Point3D amax, Point3D bmin, Point3D bmax)
         {
-            if (amax.X < bmin.X) return false; 
-            if (amin.X > bmax.X) return false; 
-            if (amax.Y < bmin.Y) return false; 
-            if (amin.Y > bmax.Y) return false; 
-            if (amax.Z < bmin.Z) return false; 
-            if (amin.Z > bmax.Z) return false; 
-            return true; 
+            if (amax.X < bmin.X) return false;
+            if (amin.X > bmax.X) return false;
+            if (amax.Y < bmin.Y) return false;
+            if (amin.Y > bmax.Y) return false;
+            if (amax.Z < bmin.Z) return false;
+            if (amin.Z > bmax.Z) return false;
+            return true;
         }
 
         public override int Execute(params string[] parameters)
@@ -57,8 +57,8 @@ namespace HideByCoords
             Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1].Replace("neg", "-")), Convert.ToDouble(parameters[2].Replace("neg", "-")), Convert.ToDouble(parameters[3].Replace("neg", "-")));
             Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4].Replace("neg", "-")), Convert.ToDouble(parameters[5].Replace("neg", "-")), Convert.ToDouble(parameters[6].Replace("neg", "-")));
             string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\HideByCoords.log";
-            File.WriteAllText(logfile, "script start\r\n");
-           
+            string log = "";
+
 
             Document doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
             ModelItemEnumerableCollection allmodelitems = doc.Models.CreateCollectionFromRootItems().DescendantsAndSelf;
@@ -74,18 +74,25 @@ namespace HideByCoords
                     if (modelItem.HasGeometry)
                     {
                         if (!BoxesIntersect(modelItem.BoundingBox().Min, modelItem.BoundingBox().Max, selbbmin, selbbmax))
+                        {
                             itemsoutside.Add(modelItem);
+                        }
+                        else
+                        {
+                            if (modelItem.DisplayName.StartsWith("/"))
+                                log += modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath) + "\r\n";
+                        }
                     }
                 }
                 catch (Exception e)
                 {
-                    File.WriteAllText(logfile, e.Message + "###" + e.StackTrace); 
+                    File.AppendAllText(logfile, e.Message + "#error#" + e.StackTrace);
                 }
             }
 
             doc.Models.SetHidden(itemsoutside, true);
             doc.SaveFile(fileoutpath);
-            File.WriteAllText(logfile, "script end\r\n");
+            File.AppendAllText(logfile, log);
 
             return 0;
 
