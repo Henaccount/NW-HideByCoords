@@ -80,15 +80,14 @@ namespace HideByCoords
                         }
                         else
                         {
-                            if (modelItem.DisplayName.StartsWith("/"))
+                            foreach (ModelItem ancest in modelItem.AncestorsAndSelf)
                             {
-                                if(!log.Contains(modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
-                                    log.Add(modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath));
-                            }
-                            else
-                            {
-                                if(!log.Contains(modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
-                                    log.Add(modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath));
+                                if (ancest.DisplayName.StartsWith("/"))
+                                {
+                                    if (!log.Contains(ancest.DisplayName))
+                                        log.Add(ancest.DisplayName + " -> " + Path.GetFileName(fileoutpath));
+                                    break;
+                                }
                             }
                         }
                     }
