@@ -57,7 +57,7 @@ namespace HideByCoords
             string fileoutpath = @parameters[0];
             Point3D selbbmin = new Point3D(Convert.ToDouble(parameters[1].Replace("neg", "-")), Convert.ToDouble(parameters[2].Replace("neg", "-")), Convert.ToDouble(parameters[3].Replace("neg", "-")));
             Point3D selbbmax = new Point3D(Convert.ToDouble(parameters[4].Replace("neg", "-")), Convert.ToDouble(parameters[5].Replace("neg", "-")), Convert.ToDouble(parameters[6].Replace("neg", "-")));
-            string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\HideByCoords.log";
+            string logfile = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + Path.GetFileName(fileoutpath) + ".txt";
             List<string> log = new List<string>();
 
 
@@ -84,8 +84,8 @@ namespace HideByCoords
                             {
                                 if (ancest.DisplayName.StartsWith("/"))
                                 {
-                                    if (!log.Contains(ancest.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
-                                        log.Add(ancest.DisplayName + " -> " + Path.GetFileName(fileoutpath));
+                                    if (!log.Contains(ancest.DisplayName))
+                                        log.Add(ancest.DisplayName);
                                     break;
                                 }
                             }
