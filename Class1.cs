@@ -81,6 +81,8 @@ namespace HideByCoords
                         {
                             if (modelItem.DisplayName.StartsWith("/"))
                                 log += modelItem.DisplayName + " -> " + Path.GetFileName(fileoutpath) + "\r\n";
+                            else
+                                log += modelItem.Ancestors.First.DisplayName + " -> " + Path.GetFileName(fileoutpath) + "\r\n";
                         }
                     }
                 }
