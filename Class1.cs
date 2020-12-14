@@ -84,7 +84,7 @@ namespace HideByCoords
                             {
                                 if (ancest.DisplayName.StartsWith("/"))
                                 {
-                                    if (!log.Contains(ancest.DisplayName))
+                                    if (!log.Contains(ancest.DisplayName + " -> " + Path.GetFileName(fileoutpath)))
                                         log.Add(ancest.DisplayName + " -> " + Path.GetFileName(fileoutpath));
                                     break;
                                 }
