@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-//v0:sent out to Chris Palmer only
-//v1: for customer, now including MIT license acceptance step
-[assembly: AssemblyVersion("20.0.0.0")]
-[assembly: AssemblyFileVersion("20.0.0.0")]
+//v0:
+//v1: writing part/file relation in log file 
+[assembly: AssemblyVersion("20.0.0.1")]
+[assembly: AssemblyFileVersion("20.0.0.1")]
