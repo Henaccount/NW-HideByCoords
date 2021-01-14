@@ -1,5 +1,5 @@
-# NW-HideByCoords:
-Proof-of-Concept, sample code, use at own risk: "Splits" a Navisworks model by creating copies of the model with just certain part of the model being visible. This is for use on the BIM 360 viewer.
+# NW-HideByCoords (Proof-of-Concept, sample code, use at own risk):
+"Splits" a Navisworks model by creating copies of the model with just certain part of the model being visible. This is for use on the BIM 360 viewer.
 
 # Installation:
 <img src="./HideByCoordsInstall.png" width=600>
