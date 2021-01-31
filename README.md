@@ -20,3 +20,4 @@ MaxX MaxY MaxZ are the coordinates of the upper edge of the cube with MaxX > Min
 
 <b>You cannot use the Minus for the Numbers, you need to write negative numbers like this: neg15.668 instead of -15.668</b>
 
+Tipp: with this AutoCAD tool (https://github.com/Henaccount/ClipBox-ACAD-NW) using the command: "ClipBoxNwWriteBatchOnly", you can speed up the creation of the batch file. Just select the boxes that you created in AutoCAD (using your NW model as xref) and execute the command. As a result you will see the coordinates in the "clipboxnw.bat" in your documents folder.
