@@ -22,4 +22,6 @@ MaxX MaxY MaxZ are the coordinates of the upper edge of the cube with MaxX > Min
 
 <b>You need to respect the Windows Regional Format for the number input, e.g. on a machine with German Regional Format you need to type 15,668 instead of 15.668</b>
 
-Tip: with this AutoCAD tool (https://github.com/Henaccount/ClipBox-ACAD-NW) using the command: "ClipBoxNwWriteBatchOnly", you can speed up the creation of the batch file. Just select the boxes that you created in AutoCAD (using your NW model as xref) and execute the command. As a result you will see the coordinates in the "clipboxnw.bat" in your documents folder.
+Tip: with this AutoCAD tool (https://github.com/Henaccount/ClipBox-ACAD-NW) using the command: "ClipBoxNwWriteBatchOnly", you can speed up the creation of the batch file. Just select the boxes that you created in AutoCAD (using your NW model as xref) and execute the command. As a result you will see the coordinates in the "clipboxnw.bat" in meters in your documents folder. If your NWD model has different units, you need to convert the coordinates accordingly (correct also pathing and script call in the bat file).
+
+<img src="./nw-units.png" width=300>
