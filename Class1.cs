@@ -26,6 +26,7 @@
 //Add two new namespaces
 using Autodesk.Navisworks.Api;
 using Autodesk.Navisworks.Api.Plugins;
+using Autodesk.Navisworks.Internal.ApiImplementation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,6 +63,7 @@ namespace HideByCoords
 
 
             Document doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
+            log.Add("units" + doc.Units);
             ModelItemEnumerableCollection allmodelitems = doc.Models.CreateCollectionFromRootItems().DescendantsAndSelf;
             doc.Models.SetHidden(allmodelitems, false);
 
@@ -72,10 +74,15 @@ namespace HideByCoords
             {
                 try
                 {
+                    //if (modelItem.PropertyCategories.FindPropertyByDisplayName("Item", "Icon").Value.ToDisplayString() == "Geometry")
                     if (modelItem.HasGeometry)
                     {
+                        //log.Add(modelItem.DisplayName + "###" + modelItem.BoundingBox().Min.ToString() + "###" + modelItem.BoundingBox().Max.ToString());
+                        //break;
+
                         if (!BoxesIntersect(modelItem.BoundingBox().Min, modelItem.BoundingBox().Max, selbbmin, selbbmax))
                         {
+                            //log.Add(modelItem.DisplayName + "###" + "no intersect");
                             itemsoutside.Add(modelItem);
                         }
                         else
@@ -99,7 +106,44 @@ namespace HideByCoords
             }
 
             doc.Models.SetHidden(itemsoutside, true);
-            doc.SaveFile(fileoutpath);
+
+            if (fileoutpath.ToLower().EndsWith(".nwd"))
+            {
+                doc.SaveFile(fileoutpath);
+            }
+            else if (fileoutpath.ToLower().EndsWith(".fbx"))
+            {
+
+                PluginRecord FBXPluginrecord = Autodesk.Navisworks.Api.Application.Plugins.FindPlugin("NativeExportPluginAdaptor_LcFbxExporterPlugin_Export.Navisworks");
+
+                if (FBXPluginrecord != null)
+                {
+                    if (!FBXPluginrecord.IsLoaded)
+                    {
+                        FBXPluginrecord.LoadPlugin();
+                    }
+
+                    //save path of the FBX
+                    string[] pa = { fileoutpath };
+
+                    //way 1: by base class of plugin
+
+                    //Plugin FBXplugin =
+                    //           FBXPluginrecord.LoadedPlugin as Plugin;
+
+
+                    //FBXplugin.GetType().InvokeMember("Execute",
+                    //    System.Reflection.BindingFlags.InvokeMethod,
+                    //    null, FBXplugin, pa);
+
+                    //way 2: by specific class of export plugin
+
+                    NativeExportPluginAdaptor FBXplugin = FBXPluginrecord.LoadedPlugin as NativeExportPluginAdaptor;
+
+                    FBXplugin.Execute(pa);
+                }
+            }
+
             File.AppendAllText(logfile, string.Join("\r\n", log));
 
             return 0;
