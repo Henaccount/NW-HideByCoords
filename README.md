@@ -28,4 +28,5 @@ Tip: with this AutoCAD tool (https://github.com/Henaccount/ClipBox-ACAD-NW) usin
 
 <i>FBX Export Option:</i>
 
-Simply specify the output file with .fbx extension, output will bw ascii type.
+Simply specify the output file with .fbx extension, output will be FBX (ascii type) then. 
+( thanks to: https://adndevblog.typepad.com/aec/2017/03/navisworks-api-export-model-or-model-items-to-fbx-.html )
