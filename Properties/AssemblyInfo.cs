@@ -34,5 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 //v0:
 //v1: writing part/file relation in log file 
-[assembly: AssemblyVersion("20.0.0.1")]
-[assembly: AssemblyFileVersion("20.0.0.1")]
+//v2: now with fbx export option
+[assembly: AssemblyVersion("20.0.0.2")]
+[assembly: AssemblyFileVersion("20.0.0.2")]
