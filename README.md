@@ -33,4 +33,4 @@ Simply specify the output file with .fbx extension, output will be FBX (ascii ty
 
 Ascii FBX is very large, so you might want to use Binary FBX output, switch standard output format in the Navisworks (advanced) Settings:
 
-<img src="./nw-units.png" width=600>
+<img src="./nw-fbx-binary.png" width=600>
